@@ -1,6 +1,9 @@
 def recursive(n,start,end):
+    if (not n[0]<=end[1]<=n[0]+2**n[2]) or (not n[1]<=end[0]<=n[1]+2**n[2]):
+        start[2]+=4**n[2]
+        return 0
     if n[2] ==1:
-        if start ==end:
+        if [start[0],start[1]] ==end:
             print(start[2])
             exit()
         elif [start[0]+1,start[1]] == end:
@@ -25,8 +28,5 @@ def recursive(n,start,end):
 
     
     
-    
-    
-    
 a,b,c = list(map(int,input().rstrip().split()))
-print(recursive((0,0,a),[0,0,0],[b,c])-1)
+print(recursive((0,0,a),[0,0,0],[c,b])-1)
