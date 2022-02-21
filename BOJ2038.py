@@ -17,7 +17,7 @@ else:
         for i in range(dp[start]):
             dp[tmp] = start
             result+=start
-            if result>a:
+            if result>=a:
                 print(tmp)
                 exit()
             tmp+=1

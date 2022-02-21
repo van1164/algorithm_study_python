@@ -11,22 +11,23 @@ def bfs(graph,start,end,size):
     moving =0
     while(True):
         tmp = []
-        minn = 100
+        minn = 1000000
         while stack:
             n = stack.popleft()
-            visited.add((n[0],n[1]))
             if  n[2]+1>minn:
                 stack = []
                 break
             for i in range(4):
                 x = n[0] +dx[i]
                 y = n[1] +dy[i]
-                if  (x,y) not in visited and x<end and y <end and x>=0 and y>=0 and graph[y][x]<=size and n[2]+1<=minn:
+                if  (x,y) not in visited and 0<=x<end and 0<=y <end and graph[y][x]<=size and n[2]+1<=minn:
                     if graph[y][x] <size and graph[y][x]!=0 :
                         heapq.heappush(tmp,((n[2]+1),y,x))
+                        visited.add((x,y))
                         minn = n[2]+1
                         break
                     else:
+                        visited.add((x,y))
                         stack.append((x,y,n[2]+1))
         if not tmp and not stack:
             break
