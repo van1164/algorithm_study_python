@@ -27,17 +27,19 @@ def gwal_mul(lst :deque):
             next = lst.popleft()
             if next=='(':
                 cnt = 1
-                stack.append(next)
+                temp_go = deque([])
+                temp_go.append(next)
                 while lst:
                     next = lst.popleft()
                     if next == ')':
                         cnt-=1
                     elif next =='(':
                         cnt+=1
-                    stack.append(next)
+                    temp_go.append(next)
                     if cnt ==0:
-                        stack.append(')')
+                        stack+=gwal_mul(temp_go)
                         break
+                stack.append(')')
             else:
                 stack.append(next)
                 stack.append(')')
@@ -76,17 +78,19 @@ def gwal_plus(lst :deque):
             next = lst.popleft()
             if next=='(':
                 cnt = 1
-                stack.append(next)
+                temp_go = deque([])
+                temp_go.append(next)
                 while lst:
                     temp = lst.popleft()
                     if temp == ')':
                         cnt-=1
                     elif temp =='(':
                         cnt+=1
-                    stack.append(temp)
+                    temp_go.append(temp)
                     if cnt ==0:
-                        stack.append(')')
+                        stack+=gwal_plus(temp_go)
                         break
+                stack.append(')')
             else:
                 stack.append(next)
                 stack.append(')')
@@ -115,7 +119,7 @@ def rpx(lst):
                     temp = operator.pop()
                     if temp =='(':
                         while temp_stack:
-                            operand.append(temp_stack.popleft())
+                            operator.append(temp_stack.popleft())
                         break
                     else:
                         temp_stack.append(temp)
