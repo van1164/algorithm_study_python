@@ -1,16 +1,42 @@
-import sys
-sys.setrecursionlimit(10 ** 9)
-visited = {'0':0,'1':1,'2':1}
+global graph
+graph = list()
 
-def fibo(n):
-    print(n)
-    if str(n) in visited:
-        return visited[str(n)]
+def back(lst,N,M,visited = [],cnt=0):
+    global graph
+    if M==cnt:
+        graph.append(visited)
+        return
+    for i in range(0,N):
+        if i in visited:
+            continue
+        back(lst,N,M,visited+[i],cnt+1)
+    
+
+N,M = list(map(int,input().split()))
+lst = list(map(int,input().split()))
+dup = dict()
+lst.sort()
+prev = -1
+for i in lst:
+    if prev == i:
+        if i in dup:
+            dup[i]+=1
+        else:
+            dup[i]=1
     else:
-        visited[str(n)] = (fibo(n-1)+fibo(n-2))%1000000007
-        del visited[str(n-2)]
-        return visited[str(n)]
+        prev = i
     
-    
-a = int(input())
-print(fibo(a))
+print(dup)
+
+
+back(lst,N,M)
+prev = []
+for i in graph:
+    if prev ==i:
+        continue
+    else:
+        for k in i:
+            print(lst[k],end=' ')
+        print()
+        prev = i
+
