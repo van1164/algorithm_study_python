@@ -1,17 +1,23 @@
-import sys
-a,b =list(map(int,sys.stdin.readline().rstrip().split()))
-lst =list(map(int,sys.stdin.readline().rstrip().split()))
-if (sum(lst)<b):
-    print(0)
-    exit()
-minn = 10000000134
-for i in range(len(lst)):
-    tmp = 0
-    cnt = 0
-    for j in range(i,len(lst)):
-        tmp+=lst[j]
-        if tmp>=b:
-            if minn>j-i+1:
-                minn = j-i+1
-                break
-print(minn)
+from collections import deque
+from math import log2,ceil
+
+N,M = list(map(int, input().split()))
+lst =  list(map(int, input().split()))
+x = int(ceil(log2(N)))
+result = [0]*(pow(2,x+1))
+end = len(result)
+start = pow(2,x)
+
+k =0
+for i in range(start,start+len(lst)):
+    result[i] = lst[k]
+    k+=1
+
+for i in range(len(result)-1,0,-2):
+    result[i//2]=result[i]+result[i-1]
+
+
+for i in range(len(result)-1,0,-1):
+    if result[i]>=M:
+        print(int(log2(len(result))) -int(log2(i)))
+        exit()
